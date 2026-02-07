@@ -203,7 +203,71 @@ Fetches a previously stored evaluation for audit or review.
 
 ---
 
-## 10. Tech Stack
+## 10. Edge Case Handling
+
+The system explicitly accounts for critical edge cases to ensure robustness, fairness, and predictable behavior.
+
+### 1. Zero Experience or Zero Projects
+
+**Scenario:**  
+A candidate submits a profile with `0` years of experience or `0` completed projects.
+
+**Handling:**  
+- Input is considered valid.
+- Experience and project scores are calculated as `0`.
+- Other dimensions (skills, learning velocity, readiness) are still evaluated.
+
+**Reasoning:**  
+Early-stage candidates should not be rejected due to lack of experience alone.  
+The system avoids hard cutoffs and instead reflects the profile accurately.
+
+---
+
+### 2. CGPA or Academic Signals for Working Professionals
+
+**Scenario:**  
+A working professional provides CGPA or academic-related inputs.
+
+**Handling:**  
+- Academic signals are **ignored** when experience exceeds the early-career threshold.
+- No penalty is applied.
+
+**Reasoning:**  
+Academic performance loses relevance with professional experience.  
+This prevents outdated signals from skewing results.
+
+---
+
+### 3. Extreme or Inflated Inputs
+
+**Scenario:**  
+A candidate provides unusually large values (e.g., very high project count or activity metrics).
+
+**Handling:**  
+- All scoring dimensions have strict caps.
+- The final score is always normalized to a maximum of 100.
+
+**Reasoning:**  
+Capping prevents any single signal from dominating the evaluation and ensures fairness.
+
+---
+
+### 4. Missing Optional Context Signals
+
+**Scenario:**  
+Optional inputs such as GitHub activity or competitive programming stats are not provided.
+
+**Handling:**  
+- The system proceeds with base scoring.
+- No penalties are applied for missing optional data.
+
+**Reasoning:**  
+Optional signals are treated as enhancers, not requirements.  
+The system remains functional with minimal mandatory input.
+
+---
+
+## 11. Tech Stack
 
 | Layer | Technology |
 |------|-----------|
@@ -216,7 +280,7 @@ Fetches a previously stored evaluation for audit or review.
 
 ---
 
-## 11. Use Cases
+## 12. Use Cases
 
 | Use Case | Description |
 |--------|-------------|
@@ -227,7 +291,7 @@ Fetches a previously stored evaluation for audit or review.
 
 ---
 
-## 12. Installation & Setup
+## 13. Installation & Setup
 
 ### Clone Repository
 
@@ -273,7 +337,7 @@ Access API documentation at: `http://127.0.0.1:8000/docs`
 
 ---
 
-## 13. Final Notes
+## 14. Final Notes
 
 CPES is intentionally deterministic and explainable.
 
