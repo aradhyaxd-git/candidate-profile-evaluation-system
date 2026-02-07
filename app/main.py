@@ -5,6 +5,6 @@ app = FastAPI()
 
 @app.get("/")
 def root():
-    return {"status": "Server is running 🚀"}
+    return {"status": "Server is running"}
 
 app.include_router(candidate_router, prefix="/api/v1")
